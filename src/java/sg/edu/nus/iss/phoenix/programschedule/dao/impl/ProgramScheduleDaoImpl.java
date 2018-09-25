@@ -14,10 +14,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import sg.edu.nus.iss.phoenix.core.dao.DBConstants;
+import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 import sg.edu.nus.iss.phoenix.programschedule.dao.ProgramScheduleDao;
 import sg.edu.nus.iss.phoenix.programschedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.programschedule.entity.WeeklySchedule;
-import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
+import sg.edu.nus.iss.phoenix.programschedule.entity.ProgramSlot;
 
 /**
  *
@@ -113,7 +114,6 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 
 			while (result.next()) {
 				AnnualSchedule temp = createAnnualValueObject();
-
 				temp.setYear(result.getInt("year"));
 				temp.setAssignedBy(result.getString("assingedBy"));
 
@@ -168,6 +168,152 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 	public WeeklySchedule createWeeklyValueObject() {
 		return new WeeklySchedule();
 	}
+        
+        @Override
+	public ProgramSlot createValueObject() {
+		return new ProgramSlot();
+	}
+
+	
+	@Override
+	public List<ProgramSlot> loadAllProgramSlot() throws SQLException {
+		openConnection();
+		String sql = "SELECT * FROM `program-slot` ORDER BY `program-name` ASC; ";
+		List<ProgramSlot> searchResults = listProgramSlotQuery(connection
+				.prepareStatement(sql));
+		closeConnection();
+		System.out.println("record size"+searchResults.size());
+		return searchResults;
+	}
+
+	
+	@Override
+	public synchronized void createProgramSlot(ProgramSlot valueObject) throws SQLException {
+
+		String sql = "";
+		PreparedStatement stmt = null;
+		openConnection();
+		try {
+			sql = "INSERT INTO `program-slot` (`duration`, `dateOfProgram`, `startTime`, 'program-name') VALUES (?,?,?,?); ";
+			stmt = connection.prepareStatement(sql);
+			stmt.setTime(1, valueObject.getduration());
+			stmt.setDate(2, valueObject.getdateofProgram());
+			stmt.setTime(3, valueObject.getstartTime());
+                        stmt.setString(4, valueObject.getprogramSlotName());
+			int rowcount = databaseUpdate(stmt);
+			if (rowcount != 1) {
+				// System.out.println("PrimaryKey Error when updating DB!");
+				throw new SQLException("PrimaryKey Error when updating DB!");
+			}
+
+		} finally {
+			if (stmt != null)
+				stmt.close();
+			closeConnection();
+		}
+
+	}
+
+	/* (non-Javadoc)
+	 * @see sg.edu.nus.iss.phoenix.radioprogram.dao.impl.ProgramDAO#save(sg.edu.nus.iss.phoenix.radioprogram.entity.ProgramSlot)
+	 */
+	@Override
+	public void saveProgramSlot(ProgramSlot valueObject) throws NotFoundException,SQLException {
+
+		String sql = "UPDATE `program-slot` SET `duration` = ?, `dateofProgram` = ?, 'startTime'=? WHERE (`program-name` = ? ); ";
+		PreparedStatement stmt = null;
+		openConnection();
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setTime(1, valueObject.getduration());
+			stmt.setDate(2, valueObject.getdateofProgram());
+			stmt.setTime(3, valueObject.getstartTime());
+                        stmt.setString(4, valueObject.getprogramSlotName());
+                        
+			int rowcount = databaseUpdate(stmt);
+			if (rowcount == 0) {
+				// System.out.println("Object could not be saved! (PrimaryKey not found)");
+				throw new NotFoundException(
+						"Object could not be saved! (PrimaryKey not found)");
+			}
+			if (rowcount > 1) {
+				// System.out.println("PrimaryKey Error when updating DB! (Many objects were affected!)");
+				throw new SQLException(
+						"PrimaryKey Error when updating DB! (Many objects were affected!)");
+			}
+		} finally {
+			if (stmt != null)
+				stmt.close();
+			closeConnection();
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see sg.edu.nus.iss.phoenix.radioprogram.dao.impl.ProgramDAO#delete(sg.edu.nus.iss.phoenix.radioprogram.entity.ProgramSlot)
+	 */
+	@Override
+	public void deleteProgramSlot(ProgramSlot valueObject) throws NotFoundException,
+			SQLException {
+
+		if (valueObject.getprogramSlotName() == null) {
+			// System.out.println("Can not delete without Primary-Key!");
+			throw new NotFoundException("Can not delete without Primary-Key!");
+		}
+
+		String sql = "DELETE FROM `program-slot` WHERE (`program-name` = ? ); ";
+		PreparedStatement stmt = null;
+		openConnection();
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setString(1, valueObject.getprogramSlotName());
+
+			int rowcount = databaseUpdate(stmt);
+			if (rowcount == 0) {
+				// System.out.println("Object could not be deleted (PrimaryKey not found)");
+				throw new NotFoundException(
+						"Object could not be deleted! (PrimaryKey not found)");
+			}
+			if (rowcount > 1) {
+				// System.out.println("PrimaryKey Error when updating DB! (Many objects were deleted!)");
+				throw new SQLException(
+						"PrimaryKey Error when updating DB! (Many objects were deleted!)");
+			}
+		} finally {
+			if (stmt != null)
+				stmt.close();
+			closeConnection();
+		}
+	}
+        
+        protected List<ProgramSlot> listProgramSlotQuery(PreparedStatement stmt) throws SQLException {
+
+		ArrayList<ProgramSlot> searchResults = new ArrayList<>();
+		ResultSet result = null;
+		openConnection();
+		try {
+			result = stmt.executeQuery();
+
+			while (result.next()) {
+				ProgramSlot temp = createValueObject();
+				temp.setprogramSlotName(result.getString("program-name"));
+				temp.setdateofProgram(result.getDate("dateOfProgram"));
+				temp.setduration(result.getTime("duration"));
+                                temp.setstartTime(result.getTime("startTime"));
+
+				searchResults.add(temp);
+			}
+
+		} finally {
+			if (result != null)
+				result.close();
+			if (stmt != null)
+				stmt.close();
+			closeConnection();
+		}
+
+		return (List<ProgramSlot>) searchResults;
+	}
+
         
         private void openConnection() {
 		try {
