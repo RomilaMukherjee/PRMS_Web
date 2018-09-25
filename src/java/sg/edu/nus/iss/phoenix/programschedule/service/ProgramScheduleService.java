@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import sg.edu.nus.iss.phoenix.core.dao.DAOFactoryImpl;
 import sg.edu.nus.iss.phoenix.programschedule.dao.ProgramScheduleDao;
 import sg.edu.nus.iss.phoenix.programschedule.entity.AnnualSchedule;
+import sg.edu.nus.iss.phoenix.programschedule.entity.WeeklySchedule;
 import sg.edu.nus.iss.phoenix.radioprogram.dao.ProgramDAO;
 import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 
@@ -37,10 +38,31 @@ public class ProgramScheduleService {
 		}
 	}
         
+        public void processCreateWeek(WeeklySchedule ws) {
+		try {
+			programScheduleDao.createWeeklySchedule(ws);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+        
         public ArrayList<AnnualSchedule> findAllAS() {
 		ArrayList<AnnualSchedule> currentList = new ArrayList<AnnualSchedule>();
 		try {
 			currentList = (ArrayList<AnnualSchedule>) programScheduleDao.loadAllAnnualSchedule();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return currentList;
+
+	}
+        
+        public ArrayList<WeeklySchedule> findAllWS() {
+		ArrayList<WeeklySchedule> currentList = new ArrayList<WeeklySchedule>();
+		try {
+			currentList = (ArrayList<WeeklySchedule>) programScheduleDao.loadAllWeeklySchedule();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

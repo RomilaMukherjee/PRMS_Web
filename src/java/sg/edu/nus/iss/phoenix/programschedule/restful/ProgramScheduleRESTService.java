@@ -14,6 +14,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import sg.edu.nus.iss.phoenix.programschedule.entity.AnnualSchedule;
+import sg.edu.nus.iss.phoenix.programschedule.entity.WeeklySchedule;
 import sg.edu.nus.iss.phoenix.programschedule.service.ProgramScheduleService;
 import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 import sg.edu.nus.iss.phoenix.radioprogram.restful.RadioPrograms;
@@ -48,10 +49,35 @@ public class ProgramScheduleRESTService {
         return ASsList;
     }
     
+    @GET
+    @Path("/all_weeklySchedule")
+    @Produces(MediaType.APPLICATION_JSON)
+    public WeeklySchedules getAllWeeklySchedules() {
+        ArrayList<WeeklySchedule> wslist = programScheduleService.findAllWS();
+        WeeklySchedules WSsList = new WeeklySchedules();
+        WSsList.setWeeklySchedules(new ArrayList<WeeklySchedule>());
+        
+        for (int i = 0; i < wslist.size(); i++) {
+            WSsList.getWeeklySchedules().add(
+                new WeeklySchedule(wslist.get(i).getStartDate(), 
+                    wslist.get(i).getAssignedBy()));
+        }
+
+        return WSsList;
+    }
+    
     @PUT
     @Path("/create_annualschedule")
     @Consumes(MediaType.APPLICATION_JSON)
     public void createAnnualSchedule(AnnualSchedule annualSchedule) {
         programScheduleService.processCreate(annualSchedule);
+    }
+    
+    @PUT
+    @Path("/create_weeklyschedule")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void createWeeklySchedule(WeeklySchedule weeklySchedule) {
+        System.out.println(" Rest createWeeklySchedule :" + weeklySchedule.getAssignedBy() + " " + weeklySchedule.getStartDate());
+        programScheduleService.processCreateWeek(weeklySchedule);
     }
 }

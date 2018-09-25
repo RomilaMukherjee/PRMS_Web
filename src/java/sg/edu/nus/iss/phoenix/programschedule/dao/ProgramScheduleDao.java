@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 import sg.edu.nus.iss.phoenix.programschedule.dao.ProgramScheduleDao;
 import sg.edu.nus.iss.phoenix.programschedule.entity.AnnualSchedule;
+import sg.edu.nus.iss.phoenix.programschedule.entity.WeeklySchedule;
 import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 
 /**
@@ -17,9 +18,15 @@ import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
  */
 public interface ProgramScheduleDao {
     
-    public abstract AnnualSchedule createValueObject();
+    public abstract AnnualSchedule createAnnualValueObject();
+    
+    public abstract WeeklySchedule createWeeklyValueObject();
     
     public abstract List<AnnualSchedule> loadAllAnnualSchedule() throws SQLException;
     
+    public abstract List<WeeklySchedule> loadAllWeeklySchedule()throws SQLException;
+    
     public abstract void createAnnualSchedule(AnnualSchedule valueObject) throws SQLException;
+    
+    public abstract void createWeeklySchedule(WeeklySchedule valueObject) throws SQLException;
 }
