@@ -8,7 +8,10 @@ package sg.edu.nus.iss.phoenix.programschedule.dao.impl;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import sg.edu.nus.iss.phoenix.core.dao.DBConstants;
 import sg.edu.nus.iss.phoenix.programschedule.dao.ProgramScheduleDao;
 import sg.edu.nus.iss.phoenix.programschedule.entity.AnnualSchedule;
@@ -20,6 +23,18 @@ import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
  */
 public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
     Connection connection;
+    
+    @Override
+    public List<AnnualSchedule> loadAllAnnualSchedule() throws SQLException {
+		openConnection();
+		String sql = "SELECT * FROM `annual-schedule` ORDER BY `year` ASC; ";
+		List<AnnualSchedule> searchResults = listQuery(connection
+				.prepareStatement(sql));
+		closeConnection();
+		System.out.println("record size"+searchResults.size());
+		return searchResults;
+    }
+        
     @Override
     public synchronized void createAnnualSchedule(AnnualSchedule valueObject)
 			throws SQLException {
@@ -44,6 +59,39 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 			closeConnection();
 		}
 
+	}
+    
+    protected List<AnnualSchedule> listQuery(PreparedStatement stmt) throws SQLException {
+
+		ArrayList<AnnualSchedule> searchResults = new ArrayList<>();
+		ResultSet result = null;
+		openConnection();
+		try {
+			result = stmt.executeQuery();
+
+			while (result.next()) {
+				AnnualSchedule temp = createValueObject();
+
+				temp.setYear(result.getInt("year"));
+				temp.setAssignedBy(result.getString("assingedBy"));
+
+				searchResults.add(temp);
+			}
+
+		} finally {
+			if (result != null)
+				result.close();
+			if (stmt != null)
+				stmt.close();
+			closeConnection();
+		}
+
+		return (List<AnnualSchedule>) searchResults;
+	}
+        
+    @Override
+	public AnnualSchedule createValueObject() {
+		return new AnnualSchedule();
 	}
         
         private void openConnection() {
@@ -79,4 +127,5 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 
 		return result;
 	}
+
 }

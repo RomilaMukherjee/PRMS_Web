@@ -6,6 +6,7 @@
 package sg.edu.nus.iss.phoenix.programschedule.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import sg.edu.nus.iss.phoenix.core.dao.DAOFactoryImpl;
 import sg.edu.nus.iss.phoenix.programschedule.dao.ProgramScheduleDao;
 import sg.edu.nus.iss.phoenix.programschedule.entity.AnnualSchedule;
@@ -34,5 +35,17 @@ public class ProgramScheduleService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+        
+        public ArrayList<AnnualSchedule> findAllAS() {
+		ArrayList<AnnualSchedule> currentList = new ArrayList<AnnualSchedule>();
+		try {
+			currentList = (ArrayList<AnnualSchedule>) programScheduleDao.loadAllAnnualSchedule();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return currentList;
+
 	}
 }
