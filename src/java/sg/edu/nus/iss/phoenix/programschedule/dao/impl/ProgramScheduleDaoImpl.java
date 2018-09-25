@@ -143,7 +143,7 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 				WeeklySchedule temp = createWeeklyValueObject();
 
 				temp.setStartDate(result.getDate("startDate"));
-				temp.setAssignedBy(result.getString("assingedBy"));
+				temp.setAssignedBy(result.getString("assignedBy"));
 
 				searchResults.add(temp);
 			}
