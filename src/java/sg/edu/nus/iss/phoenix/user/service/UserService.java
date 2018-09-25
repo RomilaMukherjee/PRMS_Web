@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import sg.edu.nus.iss.phoenix.authenticate.dao.UserDao;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.core.dao.DAOFactoryImpl;
+import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 
 /**
  *
@@ -37,5 +38,33 @@ public class UserService {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-    }    
+    } 
+
+    public void processDelete(String name) {
+       
+        try {
+            User user = new User(name);
+            udao.delete(user);
+        } catch (NotFoundException | SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    public void processCreate(User user){
+        try {
+            udao.create(user);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void processUpdate(User user) {
+        try {
+            udao.save(user);
+        } catch (NotFoundException | SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }
