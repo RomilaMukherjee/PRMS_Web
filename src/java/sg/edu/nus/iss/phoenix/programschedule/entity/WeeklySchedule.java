@@ -14,16 +14,26 @@ import java.util.Date;
 public class WeeklySchedule {
     private Date startDate;
     private String assignedBy;
+    private int year;
     
     public WeeklySchedule() {
         
     }
     
-    public WeeklySchedule(Date startDate, String assignedBy) {
+    public WeeklySchedule(Date startDate, String assignedBy, int year) {
         this.startDate = startDate;
         this.assignedBy = assignedBy;
+        this.year = year;
     }
 
+     public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+    
     public Date getStartDate() {
         return startDate;
     }

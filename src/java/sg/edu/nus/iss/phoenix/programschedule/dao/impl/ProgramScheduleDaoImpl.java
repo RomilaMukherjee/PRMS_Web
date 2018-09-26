@@ -86,10 +86,11 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
                 System.out.println("Start date :" + valueObject.getStartDate() + " sqlStart date :" + sqlStartDate);
 		openConnection();
 		try {
-			sql = "INSERT INTO `weekly-schedule` (`startDate`, `assignedBy`) VALUES (?,?);";
+			sql = "INSERT INTO `weekly-schedule` (`startDate`, `assignedBy`, `year`) VALUES (?,?,?);";
 			stmt = connection.prepareStatement(sql);
                         stmt.setDate(1, sqlStartDate);
 			stmt.setString(2, valueObject.getAssignedBy());
+                        stmt.setInt(3, valueObject.getYear());
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount != 1) {
 				// System.out.println("PrimaryKey Error when updating DB!");
@@ -114,6 +115,7 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 
 			while (result.next()) {
 				AnnualSchedule temp = createAnnualValueObject();
+
 				temp.setYear(result.getInt("year"));
 				temp.setAssignedBy(result.getString("assingedBy"));
 
@@ -144,7 +146,7 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 
 				temp.setStartDate(result.getDate("startDate"));
 				temp.setAssignedBy(result.getString("assignedBy"));
-
+                                temp.setYear(result.getInt("year"));
 				searchResults.add(temp);
 			}
 

@@ -65,7 +65,7 @@ public class ProgramScheduleRESTService {
         for (int i = 0; i < wslist.size(); i++) {
             WSsList.getWeeklySchedules().add(
                 new WeeklySchedule(wslist.get(i).getStartDate(), 
-                    wslist.get(i).getAssignedBy()));
+                    wslist.get(i).getAssignedBy(), wslist.get(i).getYear()));
         }
 
         return WSsList;
