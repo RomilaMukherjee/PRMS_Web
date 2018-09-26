@@ -161,4 +161,6 @@ public interface UserDao {
 
 	public abstract User searchMatching(String uid)
 			throws SQLException;
+        
+        public abstract List<User> loadAllUsersByRole(String role) throws SQLException;
 }

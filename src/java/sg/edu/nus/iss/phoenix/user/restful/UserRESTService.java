@@ -57,6 +57,14 @@ public class UserRESTService {
     public List<User> getAllUsers() {
         return service.findAllUsers();
     }
+    
+    @GET
+    @Path("/allUserByRole/{user_role}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<User> getUsersByRole(@PathParam("user_role") String role){
+        List<User> userList = service.findAllUsersByRole(role);
+        return userList;
+    }
     @DELETE
     @Path("/delete/{uname}")
     @Consumes(MediaType.APPLICATION_JSON)

@@ -39,6 +39,15 @@ public class UserService {
             return null;
         }
     } 
+    
+    public List<User> findAllUsersByRole(String role){
+        try {
+            return udao.loadAllUsersByRole(role);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    } 
 
     public void processDelete(String name) {
        
