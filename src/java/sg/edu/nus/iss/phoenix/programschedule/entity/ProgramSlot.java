@@ -13,6 +13,9 @@ public class ProgramSlot{
     private Date dateofProgram;
     private Time duration;
     private Time startTime;
+    private Date weekStartDate;
+    private String presenter;
+    private String producer;
 
 
     public ProgramSlot(){        
@@ -25,11 +28,16 @@ public class ProgramSlot{
     public ProgramSlot (String nameIn,
           Date dateofprogramIn,
           Time durationIn,
-          Time startTimeIn) {
+          Time startTimeIn,Date weekStartDate,
+          String presenter,
+          String producer) {
           this.programSlotName = nameIn;
           this.dateofProgram = dateofprogramIn;
           this.duration = durationIn;
           this.startTime = startTimeIn;
+          this.weekStartDate = weekStartDate; 
+          this.presenter = presenter;
+          this.producer = producer;
     }
     /** 
      * Get- and Set-methods for persistent variables. The default
@@ -65,6 +73,26 @@ public class ProgramSlot{
   public void setstartTime(Time startTimeIn) {
         this.startTime = startTimeIn;
   }
+  
+  public Date getweekStartDate() {
+          return this.weekStartDate;
+    }
+    public void setweekStartDate(Date wstartDateIn) {
+          this.weekStartDate = wstartDateIn;
+    }
+     public String getpresenter() {
+          return this.presenter;
+    }
+    public void setpresenter(String presenterIn) {
+          this.presenter = presenterIn;
+    }
+     public String getproducer() {
+          return this.producer;
+    }
+    public void setproducer(String producerIn) {
+          this.producer = producerIn;
+    }
+    
 }
 
 

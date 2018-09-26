@@ -100,7 +100,10 @@ public class ProgramScheduleRESTService {
                 new ProgramSlot(pslist.get(i).getprogramSlotName(), 
                     pslist.get(i).getdateofProgram(),
                     pslist.get(i).getduration(),
-                    pslist.get(i).getstartTime()));
+                    pslist.get(i).getstartTime(),
+                pslist.get(i).getweekStartDate(),
+                pslist.get(i).getpresenter(),
+                pslist.get(i).getproducer()));
         }
 
         return slotList;

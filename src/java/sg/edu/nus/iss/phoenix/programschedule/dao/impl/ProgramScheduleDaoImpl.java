@@ -301,7 +301,9 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 				temp.setdateofProgram(result.getDate("dateOfProgram"));
 				temp.setduration(result.getTime("duration"));
                                 temp.setstartTime(result.getTime("startTime"));
-
+                                temp.setweekStartDate(result.getDate("ws_startDate"));
+                                temp.setpresenter(result.getString("presenter"));
+                                temp.setproducer(result.getString("producer"));
 				searchResults.add(temp);
 			}
 
