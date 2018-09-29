@@ -6,11 +6,11 @@
 package sg.edu.nus.iss.phoenix.user.service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sg.edu.nus.iss.phoenix.authenticate.dao.UserDao;
+import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.core.dao.DAOFactoryImpl;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
@@ -30,7 +30,15 @@ public class UserService {
         this.factory = new DAOFactoryImpl();
         this.udao = factory.getUserDAO();
     }
-        
+       
+    public List<Role> getRoles(){
+        try{
+            return udao.getRoles();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
     public List<User> findAllUsers(){
         try {
             return udao.loadAll();
