@@ -59,10 +59,10 @@ public class ProgramScheduleService {
 
 	}
         
-        public ArrayList<WeeklySchedule> findAllWS() {
+        public ArrayList<WeeklySchedule> findWSByYear(int year) {
 		ArrayList<WeeklySchedule> currentList = new ArrayList<WeeklySchedule>();
 		try {
-			currentList = (ArrayList<WeeklySchedule>) programScheduleDao.loadAllWeeklySchedule();
+			currentList = (ArrayList<WeeklySchedule>) programScheduleDao.loadWeeklySchedule(year);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

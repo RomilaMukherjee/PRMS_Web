@@ -55,10 +55,11 @@ public class ProgramScheduleRESTService {
     }
     
     @GET
-    @Path("/all_weeklySchedule")
+    @Path("/all_weeklySchedule/{year}")
     @Produces(MediaType.APPLICATION_JSON)
-    public WeeklySchedules getAllWeeklySchedules() {
-        ArrayList<WeeklySchedule> wslist = programScheduleService.findAllWS();
+    public WeeklySchedules getAllWeeklySchedules(@PathParam("year") String year) {
+        int annualYear = Integer.parseInt(year);
+        ArrayList<WeeklySchedule> wslist = programScheduleService.findWSByYear(annualYear);
         WeeklySchedules WSsList = new WeeklySchedules();
         WSsList.setWeeklySchedules(new ArrayList<WeeklySchedule>());
         

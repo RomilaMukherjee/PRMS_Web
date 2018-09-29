@@ -39,9 +39,9 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
     }
     
     @Override
-    public List<WeeklySchedule> loadAllWeeklySchedule() throws SQLException {
+    public List<WeeklySchedule> loadWeeklySchedule(int year) throws SQLException {
 		openConnection();
-		String sql = "SELECT * FROM `weekly-schedule` ORDER BY `startDate` ASC; ";
+		String sql = "SELECT * FROM `weekly-schedule` WHERE (year="+year+") ORDER BY `startDate` ASC; ";
 		List<WeeklySchedule> searchResults = listWeeklyScheduleQuery(connection
 				.prepareStatement(sql));
 		closeConnection();

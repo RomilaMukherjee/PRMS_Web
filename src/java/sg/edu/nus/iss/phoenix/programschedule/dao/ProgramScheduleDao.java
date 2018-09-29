@@ -25,7 +25,7 @@ public interface ProgramScheduleDao {
     
     public abstract List<AnnualSchedule> loadAllAnnualSchedule() throws SQLException;
     
-    public abstract List<WeeklySchedule> loadAllWeeklySchedule()throws SQLException;
+    public abstract List<WeeklySchedule> loadWeeklySchedule(int year)throws SQLException;
     
     public abstract void createAnnualSchedule(AnnualSchedule valueObject) throws SQLException;
     
