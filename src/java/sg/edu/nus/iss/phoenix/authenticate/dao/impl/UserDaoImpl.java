@@ -101,6 +101,16 @@ public class UserDaoImpl implements UserDao {
 
 		return searchResults;
 	}
+        
+        @Override
+        public List<User> loadAllUsersByRole(String role) throws SQLException {
+
+		String sql = "SELECT * FROM phoenix.user WHERE role LIKE '%"+role+"%'";
+		List<User> searchResults = listQuery(this.connection
+				.prepareStatement(sql));
+
+		return searchResults;
+	}
 
 	/*
 	 * (non-Javadoc)

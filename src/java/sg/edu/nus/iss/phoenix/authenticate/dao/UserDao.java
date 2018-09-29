@@ -164,4 +164,6 @@ public interface UserDao {
 			throws SQLException;
 
     public List<Role> getRoles() throws SQLException;
+        
+        public abstract List<User> loadAllUsersByRole(String role) throws SQLException;
 }

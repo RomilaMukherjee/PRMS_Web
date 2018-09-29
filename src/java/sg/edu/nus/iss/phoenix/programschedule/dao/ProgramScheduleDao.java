@@ -7,10 +7,11 @@ package sg.edu.nus.iss.phoenix.programschedule.dao;
 
 import java.sql.SQLException;
 import java.util.List;
+import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 import sg.edu.nus.iss.phoenix.programschedule.dao.ProgramScheduleDao;
 import sg.edu.nus.iss.phoenix.programschedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.programschedule.entity.WeeklySchedule;
-import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
+import sg.edu.nus.iss.phoenix.programschedule.entity.ProgramSlot;
 
 /**
  *
@@ -24,9 +25,21 @@ public interface ProgramScheduleDao {
     
     public abstract List<AnnualSchedule> loadAllAnnualSchedule() throws SQLException;
     
-    public abstract List<WeeklySchedule> loadAllWeeklySchedule()throws SQLException;
+    public abstract List<WeeklySchedule> loadWeeklySchedule(int year)throws SQLException;
     
     public abstract void createAnnualSchedule(AnnualSchedule valueObject) throws SQLException;
     
     public abstract void createWeeklySchedule(WeeklySchedule valueObject) throws SQLException;
+    
+    public abstract ProgramSlot createValueObject();
+        
+    public abstract List<ProgramSlot> loadAllProgramSlot() throws SQLException;
+    
+    public abstract void createProgramSlot(ProgramSlot valueObject) throws SQLException;
+    
+    public abstract void saveProgramSlot(ProgramSlot valueObject)
+			throws NotFoundException, SQLException;
+    
+    public abstract void deleteProgramSlot(ProgramSlot valueObject)
+			throws NotFoundException, SQLException;
 }
