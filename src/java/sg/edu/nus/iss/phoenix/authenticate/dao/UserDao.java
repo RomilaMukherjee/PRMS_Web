@@ -2,6 +2,7 @@ package sg.edu.nus.iss.phoenix.authenticate.dao;
 
 import java.sql.SQLException;
 import java.util.List;
+import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
 
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
@@ -161,4 +162,6 @@ public interface UserDao {
 
 	public abstract User searchMatching(String uid)
 			throws SQLException;
+
+    public List<Role> getRoles() throws SQLException;
 }
