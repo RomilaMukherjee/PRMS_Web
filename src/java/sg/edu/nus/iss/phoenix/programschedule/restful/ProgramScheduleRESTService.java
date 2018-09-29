@@ -26,7 +26,7 @@ import sg.edu.nus.iss.phoenix.programschedule.entity.ProgramSlot;
 import sg.edu.nus.iss.phoenix.programschedule.restful.ProgramSlotList;
 
 /**
- *
+ *REST Web Service
  * @author Ragu
  */
 @Path("programschedule")
@@ -34,6 +34,9 @@ import sg.edu.nus.iss.phoenix.programschedule.restful.ProgramSlotList;
 public class ProgramScheduleRESTService {
     private ProgramScheduleService programScheduleService;
     
+     /**
+     * Creates a new instance of ProgramScheduleRESTService
+     */
     public ProgramScheduleRESTService() {
         programScheduleService = new ProgramScheduleService();
     }

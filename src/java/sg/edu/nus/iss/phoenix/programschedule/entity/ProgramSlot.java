@@ -16,8 +16,13 @@ public class ProgramSlot{
     private Date weekStartDate;
     private String presenter;
     private String producer;
-
-
+    
+   /** 
+     * Constructors. 
+     * The first one takes no arguments and provides the most simple
+     * way to create object instance. The another one takes one
+     * argument, which is the primary key of the corresponding table.
+     */
     public ProgramSlot(){        
     }
     

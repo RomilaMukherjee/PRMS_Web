@@ -22,8 +22,9 @@ import sg.edu.nus.iss.phoenix.programschedule.entity.WeeklySchedule;
 import sg.edu.nus.iss.phoenix.programschedule.entity.ProgramSlot;
 
 /**
- *
- * @author Ragu
+ * ProgramSchedule Data Access Object (DAO). This class contains all database
+ * handling that is needed to permanently store and retrieve Program Schedule and Progrma Slot object
+ * instances.
  */
 public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
     Connection connection;
@@ -106,6 +107,17 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 
 	}
     
+    /**
+	 * databaseQuery-method. This method is a helper method for internal use. It
+	 * will execute all database queries that will return multiple rows. The
+	 * resultset will be converted to the List of valueObjects. If no rows were
+	 * found, an empty List will be returned.
+	 * 
+	 * @param stmt
+	 *            This parameter contains the SQL statement to be excuted.
+     * @return 
+     * @throws java.sql.SQLException
+	 */
     protected List<AnnualSchedule> listAnnualScheduleQuery(PreparedStatement stmt) throws SQLException {
 
 		ArrayList<AnnualSchedule> searchResults = new ArrayList<>();
@@ -134,6 +146,17 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		return (List<AnnualSchedule>) searchResults;
 	}
     
+    /**
+	 * databaseQuery-method. This method is a helper method for internal use. It
+	 * will execute all database queries that will return multiple rows. The
+	 * resultset will be converted to the List of valueObjects. If no rows were
+	 * found, an empty List will be returned.
+	 * 
+	 * @param stmt
+	 *            This parameter contains the SQL statement to be excuted.
+     * @return 
+     * @throws java.sql.SQLException
+	 */
     protected List<WeeklySchedule> listWeeklyScheduleQuery(PreparedStatement stmt) throws SQLException {
 
 		ArrayList<WeeklySchedule> searchResults = new ArrayList<>();
@@ -304,6 +327,17 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		}
 	}
         
+        /**
+	 * databaseQuery-method. This method is a helper method for internal use. It
+	 * will execute all database queries that will return multiple rows. The
+	 * resultset will be converted to the List of valueObjects. If no rows were
+	 * found, an empty List will be returned.
+	 * 
+	 * @param stmt
+	 *            This parameter contains the SQL statement to be excuted.
+     * @return 
+     * @throws java.sql.SQLException
+	 */
         protected List<ProgramSlot> listProgramSlotQuery(PreparedStatement stmt) throws SQLException {
 
 		ArrayList<ProgramSlot> searchResults = new ArrayList<>();
@@ -363,6 +397,18 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		}
 	}
         
+        /**
+	 * databaseUpdate-method. This method is a helper method for internal use.
+	 * It will execute all database handling that will change the information in
+	 * tables. SELECT queries will not be executed here however. The return
+	 * value indicates how many rows were affected. This method will also make
+	 * sure that if cache is used, it will reset when data changes.
+	 * 
+	 * @param stmt
+	 *            This parameter contains the SQL statement to be excuted.
+     * @return 
+     * @throws java.sql.SQLException
+	 */
         protected int databaseUpdate(PreparedStatement stmt) throws SQLException {
 
 		int result = stmt.executeUpdate();
