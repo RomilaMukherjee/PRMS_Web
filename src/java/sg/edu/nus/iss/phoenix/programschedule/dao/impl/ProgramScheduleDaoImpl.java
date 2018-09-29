@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import sg.edu.nus.iss.phoenix.core.dao.DBConstants;
@@ -206,12 +207,15 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
-			sql = "INSERT INTO `program-slot` (`duration`, `dateOfProgram`, `startTime`, 'program-name') VALUES (?,?,?,?); ";
+			sql = "INSERT INTO `program-slot` (`duration`, `dateOfProgram`, `startTime`, 'program-name', `ws_startDate`, `producer`, `presenter`) VALUES (?,?,?,?,?,?,?); ";
 			stmt = connection.prepareStatement(sql);
 			stmt.setTime(1, valueObject.getduration());
 			stmt.setDate(2, valueObject.getdateofProgram());
 			stmt.setTime(3, valueObject.getstartTime());
                         stmt.setString(4, valueObject.getprogramSlotName());
+                        stmt.setDate(5, valueObject.getweekStartDate());
+                        stmt.setString(6,valueObject.getpresenter());
+                        stmt.setString(7, valueObject.getproducer());
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount != 1) {
 				// System.out.println("PrimaryKey Error when updating DB!");
@@ -232,7 +236,7 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 	@Override
 	public void saveProgramSlot(ProgramSlot valueObject) throws NotFoundException,SQLException {
 
-		String sql = "UPDATE `program-slot` SET `duration` = ?, `dateofProgram` = ?, 'startTime'=? WHERE (`program-name` = ? ); ";
+		String sql = "UPDATE `program-slot` SET `duration` = ?, `dateofProgram` = ?, 'startTime'=?, `ws_startDate`=?, `producer`=?, `presenter`=? WHERE (`startTime` = ? ); ";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
@@ -241,6 +245,9 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 			stmt.setDate(2, valueObject.getdateofProgram());
 			stmt.setTime(3, valueObject.getstartTime());
                         stmt.setString(4, valueObject.getprogramSlotName());
+                        stmt.setDate(5, valueObject.getweekStartDate());
+                        stmt.setString(6,valueObject.getpresenter());
+                        stmt.setString(7, valueObject.getproducer());
                         
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount == 0) {
@@ -272,7 +279,7 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 			throw new NotFoundException("Can not delete without Primary-Key!");
 		}
 
-		String sql = "DELETE FROM `program-slot` WHERE (`program-name` = ? ); ";
+		String sql = "DELETE FROM `program-slot` WHERE (`startTime` = ? ); ";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
