@@ -5,6 +5,7 @@
  */
 package sg.edu.nus.iss.phoenix.programschedule.dao;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
@@ -34,6 +35,8 @@ public interface ProgramScheduleDao {
     public abstract ProgramSlot createValueObject();
         
     public abstract List<ProgramSlot> loadAllProgramSlot() throws SQLException;
+    
+    public abstract List<ProgramSlot> loadProgramSlot(Date weekStartDate)throws SQLException;
     
     public abstract void createProgramSlot(ProgramSlot valueObject) throws SQLException;
     

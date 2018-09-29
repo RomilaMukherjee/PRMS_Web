@@ -7,6 +7,7 @@ package sg.edu.nus.iss.phoenix.programschedule.restful;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
@@ -104,6 +105,24 @@ public class ProgramScheduleRESTService {
                 pslist.get(i).getweekStartDate(),
                 pslist.get(i).getpresenter(),
                 pslist.get(i).getproducer()));
+        }
+
+        return slotList;
+    }
+    
+      @GET
+    @Path("/all_programslots/{ws_startDate}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ProgramSlotList getProgramSlotbyWeek(@PathParam("ws_startDate") Date weekStartDate) {
+        ArrayList<ProgramSlot> pslist = programScheduleService.findProgramSlot(weekStartDate);
+        ProgramSlotList slotList = new ProgramSlotList();
+        slotList.setSlotList(new ArrayList<ProgramSlot>());
+        
+        for (int i = 0; i < pslist.size(); i++) {
+            slotList.getSlotList().add(
+                new ProgramSlot(pslist.get(i).getprogramSlotName(), 
+                    pslist.get(i).getdateofProgram(), pslist.get(i).getduration(),pslist.get(i).getstartTime(),
+                pslist.get(i).getweekStartDate(),pslist.get(i).getpresenter(),pslist.get(i).getproducer()));
         }
 
         return slotList;

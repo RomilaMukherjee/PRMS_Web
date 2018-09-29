@@ -188,7 +188,17 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		return searchResults;
 	}
 
-	
+	 @Override
+        public List<ProgramSlot> loadProgramSlot(Date weekStartDate) throws SQLException {
+		openConnection();
+		String sql = "SELECT * FROM `program-slot` WHERE (ws_startDate="+weekStartDate+") ORDER BY `dateOfProgram` ASC; ";
+		List<ProgramSlot> searchResults = listProgramSlotQuery(connection
+				.prepareStatement(sql));
+		closeConnection();
+		System.out.println("record size"+searchResults.size());
+		return searchResults;
+        
+        }
 	@Override
 	public synchronized void createProgramSlot(ProgramSlot valueObject) throws SQLException {
 

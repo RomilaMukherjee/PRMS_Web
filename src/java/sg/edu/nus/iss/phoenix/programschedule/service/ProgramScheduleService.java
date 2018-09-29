@@ -5,6 +5,7 @@
  */
 package sg.edu.nus.iss.phoenix.programschedule.service;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import sg.edu.nus.iss.phoenix.core.dao.DAOFactoryImpl;
@@ -118,6 +119,19 @@ public class ProgramScheduleService {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+	}
+        
+        
+        public ArrayList<ProgramSlot> findProgramSlot(Date weekStartDate) {
+		ArrayList<ProgramSlot> currentList = new ArrayList<ProgramSlot>();
+		try {
+			currentList = (ArrayList<ProgramSlot>) programScheduleDao.loadProgramSlot(weekStartDate);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return currentList;
+
 	}
         
 }
