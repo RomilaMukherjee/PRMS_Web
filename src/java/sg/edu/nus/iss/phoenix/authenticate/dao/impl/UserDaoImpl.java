@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -451,5 +450,42 @@ public class UserDaoImpl implements UserDao {
 		} catch (SQLException e) {
 		}
 		return conn;
+	}
+
+    @Override
+    public List<Role> getRoles() throws SQLException{
+        String sql = "SELECT * FROM role ORDER BY role ASC ";
+		List<Role> searchResults;
+                searchResults = listRoles(this.connection
+                        .prepareStatement(sql));
+
+		return searchResults;
+    }
+    
+    protected List<Role> listRoles(PreparedStatement stmt) throws SQLException {
+
+		List<Role> searchResults = new ArrayList<>();
+		try (ResultSet result = stmt.executeQuery()) {
+
+			while (result.next()) {
+				Role temp = new Role();
+
+				temp.setRole(result.getString("role"));
+				temp.setAccessPrivilege(result.getString("accessPrivilege"));
+				
+				//Role e = new Role(result.getString("role"));
+				//ArrayList<Role> roles = new ArrayList<Role>();
+				//roles.add(e);
+				//temp.setRoles(roles);
+
+				searchResults.add(temp);
+			}
+
+		} finally {
+			if (stmt != null)
+				stmt.close();
+		}
+
+		return (List<Role>) searchResults;
 	}
 }
