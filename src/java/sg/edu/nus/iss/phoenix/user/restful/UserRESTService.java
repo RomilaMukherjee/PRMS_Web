@@ -96,7 +96,7 @@ public class UserRESTService {
     /**
      * PUT method for updating or creating an instance of UserRESTService
      * @param user
-     * @param content representation for the resource
+     *            content representation for the resource
      */
     @PUT
     @Path("/update")

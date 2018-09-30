@@ -334,9 +334,9 @@ public class RoleDaoImpl implements RoleDao {
 	 * sure that if cache is used, it will reset when data changes.
 	 * 
 	 * @param stmt
-	 *            This parameter contains the SQL statement to be excuted.
-     * @return 
-     * @throws java.sql.SQLException
+	 *            This parameter contains the SQL statement to be executed.
+         * @return integer
+         * @throws java.sql.SQLException
 	 */
 	protected int databaseUpdate(PreparedStatement stmt) throws SQLException {
 
@@ -348,7 +348,7 @@ public class RoleDaoImpl implements RoleDao {
 	/**
 	 * databaseQuery-method. This method is a helper method for internal use. It
 	 * will execute all database queries that will return only one row. The
-	 * resultset will be converted to valueObject. If no rows were found,
+	 * result set will be converted to valueObject. If no rows were found,
 	 * NotFoundException will be thrown.
 	 * 
 	 * @param stmt
@@ -383,13 +383,13 @@ public class RoleDaoImpl implements RoleDao {
 	/**
 	 * databaseQuery-method. This method is a helper method for internal use. It
 	 * will execute all database queries that will return multiple rows. The
-	 * resultset will be converted to the List of valueObjects. If no rows were
+	 * result set will be converted to the List of valueObjects. If no rows were
 	 * found, an empty List will be returned.
 	 * 
 	 * @param stmt
-	 *            This parameter contains the SQL statement to be excuted.
-     * @return 
-     * @throws java.sql.SQLException
+	 *            This parameter contains the SQL statement to be executed.
+         * @return List
+         * @throws java.sql.SQLException
 	 */
 	protected List<Role> listQuery(PreparedStatement stmt) throws SQLException {
 

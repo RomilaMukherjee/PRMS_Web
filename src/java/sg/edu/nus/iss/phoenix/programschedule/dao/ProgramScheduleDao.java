@@ -112,21 +112,20 @@ public interface ProgramScheduleDao {
 	 */
     public abstract List<ProgramSlot> loadAllProgramSlot() throws SQLException;
     
-    /**
-	 * load-method. This will load valueObject contents from database using
+     /**
+         * loadProgramSlot-method. This will load valueObject contents from database using
 	 * Primary-Key as identifier. Upper layer should use this so that
 	 * valueObject instance is created and only primary-key should be specified.
 	 * Then call this method to complete other persistent information. This
 	 * method will overwrite all other fields except primary-key and possible
 	 * runtime variables. If load can not find matching row, NotFoundException
 	 * will be thrown.
-	 * 
-	 * @param weekStartDate 
-	 *            This parameter contains the class instance to be loaded.
-	 *            Primary-key field must be set for this to work properly.
-     * @throws sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException
-     * @throws java.sql.SQLException
-	 */
+        * @param weekStartDate
+        * @return
+        *          This parameter contains the class instance to be loaded.
+        *          Primary-key field must be set for this to work properly.
+        * @throws java.sql.SQLException
+        */
     public abstract List<ProgramSlot> loadProgramSlot(Date weekStartDate)throws SQLException;
     
     /**

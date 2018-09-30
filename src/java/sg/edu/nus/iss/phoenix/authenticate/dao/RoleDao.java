@@ -23,6 +23,8 @@ public interface RoleDao {
 	 * using given Primary-Key as identifier. This method is just a convenience method 
 	 * for the real load-method which accepts the valueObject as a parameter. Returned
 	 * valueObject will be created using the createValueObject() method.
+         * @throws NotFoundException 
+         * @throws SQLException
 	 */
 	public abstract Role getObject(String role)
 			throws NotFoundException, SQLException;

@@ -13,8 +13,8 @@ public interface ProgramDAO {
 	 * createValueObject-method. This method is used when the Dao class needs to
 	 * create new value object instance. The reason why this method exists is
 	 * that sometimes the programmer may want to extend also the valueObject and
-	 * then this method can be over-rided to return extended valueObject.
-     * @return 
+	 * then this method can be over-ridded to return extended valueObject.
+         * @return RadioProgram
 	 */
 	public abstract RadioProgram createValueObject();
 

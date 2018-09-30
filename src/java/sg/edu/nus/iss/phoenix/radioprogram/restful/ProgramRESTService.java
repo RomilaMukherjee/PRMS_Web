@@ -52,7 +52,6 @@ public class ProgramRESTService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public RadioProgram getRadioProgram() {
-        //TODO return proper representation object
         throw new UnsupportedOperationException();
     }
     @GET
@@ -75,7 +74,7 @@ public class ProgramRESTService {
     
     /**
      * PUT method for updating or creating an instance of resource
-     * @param content representation for the resource
+     * @param rp content representation for the resource
      */
     @POST
     @Path("/update")
@@ -86,7 +85,7 @@ public class ProgramRESTService {
     
     /**
      * POST method for creating an instance of resource
-     * @param content representation for the resource
+     * @param rp content representation for the resource
      */
     @PUT
     @Path("/create")

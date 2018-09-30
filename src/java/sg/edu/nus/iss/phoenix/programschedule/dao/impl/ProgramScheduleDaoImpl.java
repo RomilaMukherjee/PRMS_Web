@@ -110,14 +110,14 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
     /**
 	 * databaseQuery-method. This method is a helper method for internal use. It
 	 * will execute all database queries that will return multiple rows. The
-	 * resultset will be converted to the List of valueObjects. If no rows were
+	 * result set will be converted to the List of valueObjects. If no rows were
 	 * found, an empty List will be returned.
 	 * 
 	 * @param stmt
 	 *            This parameter contains the SQL statement to be excuted.
      * @return 
      * @throws java.sql.SQLException
-	 */
+     */
     protected List<AnnualSchedule> listAnnualScheduleQuery(PreparedStatement stmt) throws SQLException {
 
 		ArrayList<AnnualSchedule> searchResults = new ArrayList<>();

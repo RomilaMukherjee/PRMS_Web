@@ -16,7 +16,7 @@ public interface UserDao {
 	 * then this method can be overrided to return extended valueObject. NOTE:
 	 * If you extend the valueObject class, make sure to override the clone()
 	 * method in it!
-     * @return 
+     * @return User
 	 */
 	public abstract User createValueObject();
 

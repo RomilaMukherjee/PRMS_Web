@@ -131,9 +131,11 @@ public class ProgramScheduleRESTService {
         return slotList;
     }
     
+    
+ 
     /**
      * PUT method for updating or creating an instance of resource
-     * @param content representation for the resource
+     * @param ps content representation for the resource
      */
     @POST
     @Path("/updateProgramSlot")
@@ -144,7 +146,7 @@ public class ProgramScheduleRESTService {
     
     /**
      * POST method for creating an instance of resource
-     * @param content representation for the resource
+     * @param ps content representation for the resource
      */
     @PUT
     @Path("/createProgramSlot")

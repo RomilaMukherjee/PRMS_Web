@@ -40,7 +40,7 @@ public class Role implements Cloneable, Serializable {
 	 * Get- and Set-methods for persistent variables. The default behaviour does
 	 * not make any checks against malformed data, so these might require some
 	 * manual additions.
-     * @return 
+         * @return String
 	 */
 	public String getRole() {
 		return this.role;
@@ -80,7 +80,8 @@ public class Role implements Cloneable, Serializable {
 	 * the same row in database.
      * @param valueObject
      * @return 
-	 */
+     *          boolean
+     */
 	public boolean hasEqualMapping(Role valueObject) {
 
 		if (this.role == null) {

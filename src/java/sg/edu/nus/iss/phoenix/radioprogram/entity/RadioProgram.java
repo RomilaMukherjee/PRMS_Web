@@ -154,7 +154,7 @@ public class RadioProgram implements Cloneable, Serializable {
      * Note, that this method is different than the clone() which
      * is defined in java.lang.Object. Here, the returned cloned object
      * will also have all its attributes cloned.
-     * @return 
+     * @return Object
      * @throws java.lang.CloneNotSupportedException 
      */
         @Override
