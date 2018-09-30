@@ -133,7 +133,7 @@ public class ProgramScheduleDaoImplTest {
     @Test
     public void testCreateAnnualSchedule(){
         
-            int year = 2020;
+            int year = 2019;
             String assignedBy ="dilbert";
             int result=0;
             
@@ -152,9 +152,8 @@ public class ProgramScheduleDaoImplTest {
 			
             }catch (SQLException ex) {
                 Logger.getLogger(ProgramScheduleDaoImplTest.class.getName()).log(Level.SEVERE, null, ex);
-                if (result != 1) {
-                      fail();
-		}
+                assertFalse("Tryig to insert duplicate primary key",result!=-1);
+             
             }
     }
 }
