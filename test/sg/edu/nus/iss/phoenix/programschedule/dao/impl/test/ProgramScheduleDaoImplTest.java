@@ -25,7 +25,7 @@ import sg.edu.nus.iss.phoenix.programschedule.entity.WeeklySchedule;
 
 /**
  *
- * @author Hp
+ * @author Romila
  */
 public class ProgramScheduleDaoImplTest {
     

@@ -114,7 +114,7 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 	 * found, an empty List will be returned.
 	 * 
 	 * @param stmt
-	 *            This parameter contains the SQL statement to be excuted.
+	 *            This parameter contains the SQL statement to be executed.
      * @return 
      * @throws java.sql.SQLException
      */
