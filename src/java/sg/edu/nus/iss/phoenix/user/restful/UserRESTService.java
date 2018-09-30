@@ -21,6 +21,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
+import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 import sg.edu.nus.iss.phoenix.user.service.UserService;
@@ -57,6 +58,13 @@ public class UserRESTService {
     public List<User> getAllUsers() {
         return service.findAllUsers();
     }
+    @GET
+    @Path("/allroles")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Role> getAllRoles() {
+        return service.getRoles();
+    }
+    
     
     @GET
     @Path("/allUserByRole/{user_role}")

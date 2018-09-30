@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import sg.edu.nus.iss.phoenix.core.dao.DBConstants;
@@ -21,8 +22,9 @@ import sg.edu.nus.iss.phoenix.programschedule.entity.WeeklySchedule;
 import sg.edu.nus.iss.phoenix.programschedule.entity.ProgramSlot;
 
 /**
- *
- * @author Ragu
+ * ProgramSchedule Data Access Object (DAO). This class contains all database
+ * handling that is needed to permanently store and retrieve Program Schedule and Progrma Slot object
+ * instances.
  */
 public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
     Connection connection;
@@ -105,6 +107,17 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 
 	}
     
+    /**
+	 * databaseQuery-method. This method is a helper method for internal use. It
+	 * will execute all database queries that will return multiple rows. The
+	 * resultset will be converted to the List of valueObjects. If no rows were
+	 * found, an empty List will be returned.
+	 * 
+	 * @param stmt
+	 *            This parameter contains the SQL statement to be excuted.
+     * @return 
+     * @throws java.sql.SQLException
+	 */
     protected List<AnnualSchedule> listAnnualScheduleQuery(PreparedStatement stmt) throws SQLException {
 
 		ArrayList<AnnualSchedule> searchResults = new ArrayList<>();
@@ -133,6 +146,17 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		return (List<AnnualSchedule>) searchResults;
 	}
     
+    /**
+	 * databaseQuery-method. This method is a helper method for internal use. It
+	 * will execute all database queries that will return multiple rows. The
+	 * resultset will be converted to the List of valueObjects. If no rows were
+	 * found, an empty List will be returned.
+	 * 
+	 * @param stmt
+	 *            This parameter contains the SQL statement to be excuted.
+     * @return 
+     * @throws java.sql.SQLException
+	 */
     protected List<WeeklySchedule> listWeeklyScheduleQuery(PreparedStatement stmt) throws SQLException {
 
 		ArrayList<WeeklySchedule> searchResults = new ArrayList<>();
@@ -188,7 +212,17 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		return searchResults;
 	}
 
-	
+	 @Override
+        public List<ProgramSlot> loadProgramSlot(Date weekStartDate) throws SQLException {
+		openConnection();
+		String sql = "SELECT * FROM `program-slot` WHERE (ws_startDate="+weekStartDate+") ORDER BY `dateOfProgram` ASC; ";
+		List<ProgramSlot> searchResults = listProgramSlotQuery(connection
+				.prepareStatement(sql));
+		closeConnection();
+		System.out.println("record size"+searchResults.size());
+		return searchResults;
+        
+        }
 	@Override
 	public synchronized void createProgramSlot(ProgramSlot valueObject) throws SQLException {
 
@@ -196,12 +230,15 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
-			sql = "INSERT INTO `program-slot` (`duration`, `dateOfProgram`, `startTime`, 'program-name') VALUES (?,?,?,?); ";
+			sql = "INSERT INTO `program-slot` (`duration`, `dateOfProgram`, `startTime`, 'program-name', `ws_startDate`, `producer`, `presenter`) VALUES (?,?,?,?,?,?,?); ";
 			stmt = connection.prepareStatement(sql);
 			stmt.setTime(1, valueObject.getduration());
 			stmt.setDate(2, valueObject.getdateofProgram());
 			stmt.setTime(3, valueObject.getstartTime());
                         stmt.setString(4, valueObject.getprogramSlotName());
+                        stmt.setDate(5, valueObject.getweekStartDate());
+                        stmt.setString(6,valueObject.getpresenter());
+                        stmt.setString(7, valueObject.getproducer());
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount != 1) {
 				// System.out.println("PrimaryKey Error when updating DB!");
@@ -222,7 +259,7 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 	@Override
 	public void saveProgramSlot(ProgramSlot valueObject) throws NotFoundException,SQLException {
 
-		String sql = "UPDATE `program-slot` SET `duration` = ?, `dateofProgram` = ?, 'startTime'=? WHERE (`program-name` = ? ); ";
+		String sql = "UPDATE `program-slot` SET `duration` = ?, `dateofProgram` = ?, 'startTime'=?, `ws_startDate`=?, `producer`=?, `presenter`=? WHERE (`startTime` = ? ); ";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
@@ -231,6 +268,9 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 			stmt.setDate(2, valueObject.getdateofProgram());
 			stmt.setTime(3, valueObject.getstartTime());
                         stmt.setString(4, valueObject.getprogramSlotName());
+                        stmt.setDate(5, valueObject.getweekStartDate());
+                        stmt.setString(6,valueObject.getpresenter());
+                        stmt.setString(7, valueObject.getproducer());
                         
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount == 0) {
@@ -262,7 +302,7 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 			throw new NotFoundException("Can not delete without Primary-Key!");
 		}
 
-		String sql = "DELETE FROM `program-slot` WHERE (`program-name` = ? ); ";
+		String sql = "DELETE FROM `program-slot` WHERE (`startTime` = ? ); ";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
@@ -287,6 +327,17 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		}
 	}
         
+        /**
+	 * databaseQuery-method. This method is a helper method for internal use. It
+	 * will execute all database queries that will return multiple rows. The
+	 * resultset will be converted to the List of valueObjects. If no rows were
+	 * found, an empty List will be returned.
+	 * 
+	 * @param stmt
+	 *            This parameter contains the SQL statement to be excuted.
+     * @return 
+     * @throws java.sql.SQLException
+	 */
         protected List<ProgramSlot> listProgramSlotQuery(PreparedStatement stmt) throws SQLException {
 
 		ArrayList<ProgramSlot> searchResults = new ArrayList<>();
@@ -301,7 +352,9 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 				temp.setdateofProgram(result.getDate("dateOfProgram"));
 				temp.setduration(result.getTime("duration"));
                                 temp.setstartTime(result.getTime("startTime"));
-
+                                temp.setweekStartDate(result.getDate("ws_startDate"));
+                                temp.setpresenter(result.getString("presenter"));
+                                temp.setproducer(result.getString("producer"));
 				searchResults.add(temp);
 			}
 
@@ -344,6 +397,18 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		}
 	}
         
+        /**
+	 * databaseUpdate-method. This method is a helper method for internal use.
+	 * It will execute all database handling that will change the information in
+	 * tables. SELECT queries will not be executed here however. The return
+	 * value indicates how many rows were affected. This method will also make
+	 * sure that if cache is used, it will reset when data changes.
+	 * 
+	 * @param stmt
+	 *            This parameter contains the SQL statement to be excuted.
+     * @return 
+     * @throws java.sql.SQLException
+	 */
         protected int databaseUpdate(PreparedStatement stmt) throws SQLException {
 
 		int result = stmt.executeUpdate();
