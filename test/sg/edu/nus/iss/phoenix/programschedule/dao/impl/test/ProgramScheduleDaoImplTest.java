@@ -10,15 +10,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import sg.edu.nus.iss.phoenix.core.dao.DBConstants;
@@ -132,4 +129,32 @@ public class ProgramScheduleDaoImplTest {
         }
 
      }
+    
+    @Test
+    public void testCreateAnnualSchedule(){
+        
+            int year = 2020;
+            String assignedBy ="dilbert";
+            int result=0;
+            
+            if(connection==null){
+                fail();
+            }
+           try {
+			String sql = "INSERT INTO `annual-schedule` (`year`, `assingedBy`) VALUES (?,?);";
+			stmt = connection.prepareStatement(sql);
+                         if(stmt==null){
+                            fail();
+                        }
+                        stmt.setInt(1,year);
+			stmt.setString(2, assignedBy);
+                        result = stmt.executeUpdate();
+			
+            }catch (SQLException ex) {
+                Logger.getLogger(ProgramScheduleDaoImplTest.class.getName()).log(Level.SEVERE, null, ex);
+                if (result != 1) {
+                      fail();
+		}
+            }
+    }
 }
