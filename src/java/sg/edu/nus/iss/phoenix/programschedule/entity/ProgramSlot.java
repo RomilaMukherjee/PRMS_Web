@@ -3,6 +3,10 @@ package sg.edu.nus.iss.phoenix.programschedule.entity;
 import java.sql.Date;
 import java.sql.Time;
 
+/**
+ * Represents a program slot and contains related methods
+ * 
+ */
 public class ProgramSlot{
   
 	/** 
@@ -26,10 +30,24 @@ public class ProgramSlot{
     public ProgramSlot(){        
     }
     
+    /**
+     * Constructor 
+     * @param nameIn name of program slot 
+     */
      public ProgramSlot (String nameIn) {
           this.programSlotName = nameIn;
     }
-     
+    
+     /**
+      * Constructor 
+      * @param nameIn name of program slot
+      * @param dateofprogramIn date of program slot
+      * @param durationIn duration of the slot
+      * @param startTimeIn Start time of the slot
+      * @param weekStartDate Start date of the week of the program slot
+      * @param presenter Presenter of the program
+      * @param producer Producer of the program
+      */
     public ProgramSlot (String nameIn,
           Date dateofprogramIn,
           Time durationIn,
