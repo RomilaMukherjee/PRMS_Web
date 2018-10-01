@@ -15,7 +15,7 @@ import sg.edu.nus.iss.phoenix.programschedule.entity.WeeklySchedule;
 import sg.edu.nus.iss.phoenix.programschedule.entity.ProgramSlot;
 
 /**
- *ProgramScheduleDao
+ *ProgramScheduleDao Interface for implementing program schedule DAO.
  * @author Ragu
  */
 public interface ProgramScheduleDao {
@@ -25,7 +25,7 @@ public interface ProgramScheduleDao {
 	 * create new Annual value object instance. The reason why this method exists is
 	 * that sometimes the programmer may want to extend also the valueObject and
 	 * then this method can be over-rided to return extended valueObject.
-     * @return 
+     * @return Annual schedule object
 	 */
     public abstract AnnualSchedule createAnnualValueObject();
     
@@ -34,7 +34,7 @@ public interface ProgramScheduleDao {
 	 * create new Weekly value object instance. The reason why this method exists is
 	 * that sometimes the programmer may want to extend also the valueObject and
 	 * then this method can be over-rided to return extended valueObject.
-     * @return 
+     * @return weekly schedule object
 	 */
     public abstract WeeklySchedule createWeeklyValueObject();
     
@@ -44,7 +44,7 @@ public interface ProgramScheduleDao {
 	 * consume huge amounts of resources if table has lot's of rows. This should
 	 * only be used when target tables have only small amounts of data.
 	 * 
-     * @return 
+     * @return List of annual schedule objects
      * @throws java.sql.SQLException
 	 */
     public abstract List<AnnualSchedule> loadAllAnnualSchedule() throws SQLException;
@@ -54,8 +54,9 @@ public interface ProgramScheduleDao {
 	 * a List containing valueObjects. Please note, that this method will
 	 * consume huge amounts of resources if table has lot's of rows. This should
 	 * only be used when target tables have only small amounts of data.
-	 * 
-     * @return 
+	 *
+         *@param  year Year for which you want to load weekly schedule
+     * @return List of weekly schedule objects
      * @throws java.sql.SQLException
 	 */
     public abstract List<WeeklySchedule> loadWeeklySchedule(int year)throws SQLException;
@@ -97,7 +98,7 @@ public interface ProgramScheduleDao {
 	 * create new value object instance. The reason why this method exists is
 	 * that sometimes the programmer may want to extend also the valueObject and
 	 * then this method can be over-rided to return extended valueObject.
-     * @return 
+     * @return A program slot object
 	 */
     public abstract ProgramSlot createValueObject();
     
@@ -107,7 +108,7 @@ public interface ProgramScheduleDao {
 	 * consume huge amounts of resources if table has lot's of rows. This should
 	 * only be used when target tables have only small amounts of data.
 	 * 
-     * @return 
+     * @return List of all program slot objects
      * @throws java.sql.SQLException
 	 */
     public abstract List<ProgramSlot> loadAllProgramSlot() throws SQLException;
@@ -120,10 +121,10 @@ public interface ProgramScheduleDao {
 	 * method will overwrite all other fields except primary-key and possible
 	 * runtime variables. If load can not find matching row, NotFoundException
 	 * will be thrown.
-        * @param weekStartDate
-        * @return
-        *          This parameter contains the class instance to be loaded.
+        * @param weekStartDate This parameter contains the class instance to be loaded.
         *          Primary-key field must be set for this to work properly.
+        * @return List of program slots
+        *          
         * @throws java.sql.SQLException
         */
     public abstract List<ProgramSlot> loadProgramSlot(Date weekStartDate)throws SQLException;
