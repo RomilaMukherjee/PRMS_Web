@@ -21,7 +21,7 @@ import sg.edu.nus.iss.phoenix.programschedule.entity.ProgramSlot;
 public interface ProgramScheduleDao {
     
     /**
-	 * createAnnualValueObject-method. This method is used when the Dao class needs to
+	 * Creates an annual schedule and returns created object. This method is used when the Dao class needs to
 	 * create new Annual value object instance. The reason why this method exists is
 	 * that sometimes the programmer may want to extend also the valueObject and
 	 * then this method can be over-rided to return extended valueObject.
@@ -30,7 +30,7 @@ public interface ProgramScheduleDao {
     public abstract AnnualSchedule createAnnualValueObject();
     
     /**
-	 * createWeeklyValueObject-method. This method is used when the Dao class needs to
+	 * Creates a weekly schedule and returns created object. This method is used when the Dao class needs to
 	 * create new Weekly value object instance. The reason why this method exists is
 	 * that sometimes the programmer may want to extend also the valueObject and
 	 * then this method can be over-rided to return extended valueObject.
@@ -39,7 +39,7 @@ public interface ProgramScheduleDao {
     public abstract WeeklySchedule createWeeklyValueObject();
     
     /**
-	 * LoadAllAnnualSchedule-method. This will read all contents from database table and build
+	 * Returns a list of all annual schedules. This will read all contents from database table and build
 	 * a List containing valueObjects. Please note, that this method will
 	 * consume huge amounts of resources if table has lot's of rows. This should
 	 * only be used when target tables have only small amounts of data.
@@ -50,7 +50,7 @@ public interface ProgramScheduleDao {
     public abstract List<AnnualSchedule> loadAllAnnualSchedule() throws SQLException;
     
     /**
-	 * LoadAllWeeklySchedule-method. This will read all contents from database table and build
+	 * Returns a list of weekly schedules of a requested year. This will read all contents from database table and build
 	 * a List containing valueObjects. Please note, that this method will
 	 * consume huge amounts of resources if table has lot's of rows. This should
 	 * only be used when target tables have only small amounts of data.
@@ -62,7 +62,7 @@ public interface ProgramScheduleDao {
     public abstract List<WeeklySchedule> loadWeeklySchedule(int year)throws SQLException;
     
     /**
-	 * createAnnualSchedule-method. This will create new row in database according to supplied
+	 * Creates an annual schedule. This will create new row in database according to supplied
 	 * valueObject contents. Make sure that values for all NOT NULL columns are
 	 * correctly specified. Also, if this table does not use automatic
 	 * surrogate-keys the primary-key must be specified. After INSERT command
@@ -78,7 +78,7 @@ public interface ProgramScheduleDao {
     public abstract void createAnnualSchedule(AnnualSchedule valueObject) throws SQLException;
     
     /**
-	 * createWeeklySchedule-method. This will create new row in database according to supplied
+	 * Creates a weekly schedule. This will create new row in database according to supplied
 	 * valueObject contents. Make sure that values for all NOT NULL columns are
 	 * correctly specified. Also, if this table does not use automatic
 	 * surrogate-keys the primary-key must be specified. After INSERT command
@@ -94,7 +94,7 @@ public interface ProgramScheduleDao {
     public abstract void createWeeklySchedule(WeeklySchedule valueObject) throws SQLException;
     
     /**
-	 * createValueObject-method. This method is used when the Dao class needs to
+	 * Creates a program slot and returns the created object. This method is used when the Dao class needs to
 	 * create new value object instance. The reason why this method exists is
 	 * that sometimes the programmer may want to extend also the valueObject and
 	 * then this method can be over-rided to return extended valueObject.
@@ -103,7 +103,7 @@ public interface ProgramScheduleDao {
     public abstract ProgramSlot createValueObject();
     
     /**
-	 * LoadAllProgramSlot-method. This will read all contents from database table and build
+	 * Returns a list of all program slots. This will read all contents from database table and build
 	 * a List containing valueObjects. Please note, that this method will
 	 * consume huge amounts of resources if table has lot's of rows. This should
 	 * only be used when target tables have only small amounts of data.
@@ -114,7 +114,8 @@ public interface ProgramScheduleDao {
     public abstract List<ProgramSlot> loadAllProgramSlot() throws SQLException;
     
      /**
-         * loadProgramSlot-method. This will load valueObject contents from database using
+         * Returns a list of program slot for a requested week's start date. 
+         * This will load valueObject contents from database using
 	 * Primary-Key as identifier. Upper layer should use this so that
 	 * valueObject instance is created and only primary-key should be specified.
 	 * Then call this method to complete other persistent information. This
@@ -130,7 +131,7 @@ public interface ProgramScheduleDao {
     public abstract List<ProgramSlot> loadProgramSlot(Date weekStartDate)throws SQLException;
     
     /**
-	 * createProgramSlot-method. This will create new row in database according to supplied
+	 * Creates a program slot. This will create new row in database according to supplied
 	 * valueObject contents. Make sure that values for all NOT NULL columns are
 	 * correctly specified. Also, if this table does not use automatic
 	 * surrogate-keys the primary-key must be specified. After INSERT command
@@ -146,7 +147,7 @@ public interface ProgramScheduleDao {
     public abstract void createProgramSlot(ProgramSlot valueObject) throws SQLException;
     
     /**
-	 * saveProgramSlot-method. This method will save the current state of valueObject to
+	 * Updates a program slot. This method will save the current state of valueObject to
 	 * database. Save can not be used to create new instances in database, so
 	 * upper layer must make sure that the primary-key is correctly specified.
 	 * Primary-key will indicate which instance is going to be updated in
@@ -163,7 +164,7 @@ public interface ProgramScheduleDao {
 			throws NotFoundException, SQLException;
     
     	/**
-	 * deleteProgramSlot-method. This method will remove the information from database as
+	 * Deletes a program slot. This method will remove the information from database as
 	 * identified by by primary-key in supplied valueObject. Once valueObject
 	 * has been deleted it can not be restored by calling save. Restoring can
 	 * only be done using create method but if database is using automatic
