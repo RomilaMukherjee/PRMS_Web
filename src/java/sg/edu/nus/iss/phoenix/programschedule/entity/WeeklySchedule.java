@@ -8,7 +8,7 @@ package sg.edu.nus.iss.phoenix.programschedule.entity;
 import java.util.Date;
 
 /**
- *
+ * Class representing a weekly schedule and related methods
  * @author Ragu
  */
 public class WeeklySchedule {
@@ -16,17 +16,26 @@ public class WeeklySchedule {
     private String assignedBy;
     private int year;
     
+    /**
+     * Constructor
+     */
     public WeeklySchedule() {
         
     }
     
+    /**
+     * Constructor
+     * @param startDate Start date 
+     * @param assignedBy Name of person who assigns the schedule
+     * @param year  Year of schedule
+     */
     public WeeklySchedule(Date startDate, String assignedBy, int year) {
         this.startDate = startDate;
         this.assignedBy = assignedBy;
         this.year = year;
     }
 
-     public int getYear() {
+    public int getYear() {
         return year;
     }
 
