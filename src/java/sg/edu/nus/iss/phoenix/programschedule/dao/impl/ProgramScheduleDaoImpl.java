@@ -29,6 +29,11 @@ import sg.edu.nus.iss.phoenix.programschedule.entity.ProgramSlot;
 public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
     Connection connection;
     
+    /**
+     * Returns a list of all annual schedules
+     * @return List of all annual schedule objects
+     * @throws SQLException 
+     */
     @Override
     public List<AnnualSchedule> loadAllAnnualSchedule() throws SQLException {
 		openConnection();
@@ -40,6 +45,12 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		return searchResults;
     }
     
+    /**
+     * Returns a list of weekly schedules for a requested year
+     * @param year integer representing requested year
+     * @return list of weekly schedule objects
+     * @throws SQLException 
+     */
     @Override
     public List<WeeklySchedule> loadWeeklySchedule(int year) throws SQLException {
 		openConnection();
@@ -50,7 +61,12 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		System.out.println("record size"+searchResults.size());
 		return searchResults;
     }
-        
+    
+    /**
+     * Creates an annual schedule 
+     * @param valueObject Annual schedule object that is to be created
+     * @throws SQLException 
+     */
     @Override
     public synchronized void createAnnualSchedule(AnnualSchedule valueObject)
 			throws SQLException {
@@ -76,7 +92,11 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		}
 
 	}
-    
+    /**
+     * Creates a weekly schedule
+     * @param valueObject The weekly sschedule objected that is to be created
+     * @throws SQLException 
+     */
     @Override
     public synchronized void createWeeklySchedule(WeeklySchedule valueObject)
 			throws SQLException {
@@ -108,7 +128,7 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 	}
     
     /**
-	 * databaseQuery-method. This method is a helper method for internal use. It
+	 * Lists annual schedules according to a SQL statement. This method is a helper method for internal use. It
 	 * will execute all database queries that will return multiple rows. The
 	 * result set will be converted to the List of valueObjects. If no rows were
 	 * found, an empty List will be returned.
@@ -147,7 +167,7 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 	}
     
     /**
-	 * databaseQuery-method. This method is a helper method for internal use. It
+	 * List weekly schedules according to a SQL statement. This method is a helper method for internal use. It
 	 * will execute all database queries that will return multiple rows. The
 	 * resultset will be converted to the List of valueObjects. If no rows were
 	 * found, an empty List will be returned.
@@ -184,6 +204,7 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		return (List<WeeklySchedule>) searchResults;
 	}
         
+    
         @Override
 	public AnnualSchedule createAnnualValueObject() {
 		return new AnnualSchedule();
@@ -199,7 +220,11 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		return new ProgramSlot();
 	}
 
-	
+	/**
+         * Loads a list of all program slots in ascending order of program name
+         * @return List of program slot object
+         * @throws SQLException 
+         */
 	@Override
 	public List<ProgramSlot> loadAllProgramSlot() throws SQLException {
 		openConnection();
@@ -210,7 +235,14 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		System.out.println("record size"+searchResults.size());
 		return searchResults;
 	}
-
+        
+        /**
+         * Load a list of program slot for a starting week date in ascending order
+         * of program date
+         * @param weekStartDate Starting date of the week for which you want to load program slots
+         * @return List of program slot objects
+         * @throws SQLException 
+         */
 	 @Override
         public List<ProgramSlot> loadProgramSlot(Date weekStartDate) throws SQLException {
 		openConnection();
@@ -222,6 +254,12 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		return searchResults;
         
         }
+        
+        /**
+         * Creates a program slot 
+         * @param valueObject Program slot object to be created
+         * @throws SQLException 
+         */
 	@Override
 	public synchronized void createProgramSlot(ProgramSlot valueObject) throws SQLException {
 
@@ -327,12 +365,12 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 	}
         
         /**
-	 * databaseQuery-method. This method is a helper method for internal use. It
+	 * Lists program slots according to a SQL statement. This method is a helper method for internal use. It
 	 * will execute all database queries that will return multiple rows. The
 	 * resultset will be converted to the List of valueObjects. If no rows were
 	 * found, an empty List will be returned.
 	 * 
-	 * @param stmt This parameter contains the SQL statement to be executed
+	 * @param stmt The SQL statement to be executed
 	 *            .
      * @return List of program slot objects
      * @throws java.sql.SQLException
@@ -368,7 +406,9 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		return (List<ProgramSlot>) searchResults;
 	}
 
-        
+        /**
+         * Estabilishes a connection to SQL server
+         */
         private void openConnection() {
 		try {
 			Class.forName(DBConstants.COM_MYSQL_JDBC_DRIVER);
@@ -386,7 +426,10 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 		}
 		
 	}
-
+        
+        /**
+         * Close the connection to SQL server
+         */
 	private void closeConnection() {
 		try {
 			this.connection.close();
@@ -397,7 +440,7 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 	}
         
         /**
-	 * databaseUpdate-method. This method is a helper method for internal use.
+	 * Updates database according to passed SQL statement. This method is a helper method for internal use.
 	 * It will execute all database handling that will change the information in
 	 * tables. SELECT queries will not be executed here however. The return
 	 * value indicates how many rows were affected. This method will also make
