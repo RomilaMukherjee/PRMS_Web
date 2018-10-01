@@ -27,7 +27,7 @@ import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 import sg.edu.nus.iss.phoenix.user.service.UserService;
 
 /**
- * REST Web Service
+ * REST Web Service to use user related services
  *
  * @author shashwatjain
  */
@@ -58,6 +58,11 @@ public class UserRESTService {
     public List<User> getAllUsers() {
         return service.findAllUsers();
     }
+    
+    /**
+     * Retrieves a list of roles
+     * @return List of role objects 
+     */
     @GET
     @Path("/allroles")
     @Produces(MediaType.APPLICATION_JSON)
@@ -65,7 +70,11 @@ public class UserRESTService {
         return service.getRoles();
     }
     
-    
+    /**
+     * Retrieves a list of users by a role
+     * @param role role of user
+     * @return List of users objects
+     */
     @GET
     @Path("/allUserByRole/{user_role}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -73,10 +82,15 @@ public class UserRESTService {
         List<User> userList = service.findAllUsersByRole(role);
         return userList;
     }
+    
+    /**
+     * Deletes a user object by user's name
+     * @param name user's name
+     */
     @DELETE
     @Path("/delete/{uname}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void deleteRadioProgram(@PathParam("uname") String name) {
+    public void deleteUser(@PathParam("uname") String name) {
         String name2;
         try { 
             name2 = URLDecoder.decode(name, "UTF-8");
@@ -87,6 +101,11 @@ public class UserRESTService {
 
         service.processDelete(name2);
     }
+    
+    /**
+     * creates a user object
+     * @param user object representing a new user
+     */
     @POST
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -95,7 +114,7 @@ public class UserRESTService {
     }
     /**
      * PUT method for updating or creating an instance of UserRESTService
-     * @param user
+     * @param user object with updated user details
      *            content representation for the resource
      */
     @PUT
