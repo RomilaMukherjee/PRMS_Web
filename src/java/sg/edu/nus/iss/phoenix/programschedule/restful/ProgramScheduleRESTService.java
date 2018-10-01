@@ -26,7 +26,7 @@ import sg.edu.nus.iss.phoenix.programschedule.entity.ProgramSlot;
 import sg.edu.nus.iss.phoenix.programschedule.restful.ProgramSlotList;
 
 /**
- *REST Web Service
+ *REST Web Service/ end point for program schedule
  * @author Ragu
  */
 @Path("programschedule")
@@ -41,6 +41,10 @@ public class ProgramScheduleRESTService {
         programScheduleService = new ProgramScheduleService();
     }
     
+    /**
+     * Gets all annual schedules
+     * @return List of annual schedule objects
+     */
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
@@ -58,6 +62,11 @@ public class ProgramScheduleRESTService {
         return ASsList;
     }
     
+    /**
+     * Gets all weekly schedules of a requested year
+     * @param year String representing year
+     * @return List of weekly schedules
+     */
     @GET
     @Path("/all_weeklySchedule/{year}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -76,6 +85,10 @@ public class ProgramScheduleRESTService {
         return WSsList;
     }
     
+    /**
+     * Creates an annual schedule with the passed parameter
+     * @param annualSchedule Annual schedule object to be created in database
+     */
     @PUT
     @Path("/create_annualschedule")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -83,6 +96,10 @@ public class ProgramScheduleRESTService {
         programScheduleService.processCreate(annualSchedule);
     }
     
+    /**
+     * Creates a weekly schedule with the passed parameter
+     * @param weeklySchedule Weekly schedule object to be created in database
+     */
     @PUT
     @Path("/create_weeklyschedule")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -91,6 +108,10 @@ public class ProgramScheduleRESTService {
         programScheduleService.processCreateWeek(weeklySchedule);
     }
     
+    /**
+     * Returns all program slots 
+     * @return Lit of program slots
+     */
         @GET
     @Path("/all_programslots")
     @Produces(MediaType.APPLICATION_JSON)
@@ -113,6 +134,11 @@ public class ProgramScheduleRESTService {
         return slotList;
     }
     
+    /**
+     * Returns a list of program slots by request week start date
+     * @param weekStartDate week start date
+     * @return List of program slots 
+     */
       @GET
     @Path("/all_programslots/{ws_startDate}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -134,8 +160,8 @@ public class ProgramScheduleRESTService {
     
  
     /**
-     * PUT method for updating or creating an instance of resource
-     * @param ps content representation for the resource
+     * POST method for updating or creating an instance of resource
+     * @param ps The updated program slot object 
      */
     @POST
     @Path("/updateProgramSlot")
@@ -145,8 +171,8 @@ public class ProgramScheduleRESTService {
     }
     
     /**
-     * POST method for creating an instance of resource
-     * @param ps content representation for the resource
+     * PUT method for creating an instance of resource
+     * @param ps The updated program slot object
      */
     @PUT
     @Path("/createProgramSlot")
@@ -157,7 +183,7 @@ public class ProgramScheduleRESTService {
    
     /**
      * DELETE method for deleting an instance of resource
-     * @param name name of the resource
+     * @param name name of the program slot 
      */
     @DELETE
     @Path("/delete/{psname}")
