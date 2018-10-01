@@ -113,10 +113,10 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 	 * result set will be converted to the List of valueObjects. If no rows were
 	 * found, an empty List will be returned.
 	 * 
-	 * @param stmt
-	 *            This parameter contains the SQL statement to be executed.
-     * @return 
-     * @throws java.sql.SQLException
+	 * @param stmt SQL statement to be executed.
+	 *            
+     * @return List of annual schedule objects
+     * @throws java.sql.SQLException 
      */
     protected List<AnnualSchedule> listAnnualScheduleQuery(PreparedStatement stmt) throws SQLException {
 
@@ -152,9 +152,8 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 	 * resultset will be converted to the List of valueObjects. If no rows were
 	 * found, an empty List will be returned.
 	 * 
-	 * @param stmt
-	 *            This parameter contains the SQL statement to be excuted.
-     * @return 
+	 * @param stmt The SQL statement to be executed.
+     * @return List of weekly schedule objects
      * @throws java.sql.SQLException
 	 */
     protected List<WeeklySchedule> listWeeklyScheduleQuery(PreparedStatement stmt) throws SQLException {
@@ -333,9 +332,9 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 	 * resultset will be converted to the List of valueObjects. If no rows were
 	 * found, an empty List will be returned.
 	 * 
-	 * @param stmt
-	 *            This parameter contains the SQL statement to be excuted.
-     * @return 
+	 * @param stmt This parameter contains the SQL statement to be executed
+	 *            .
+     * @return List of program slot objects
      * @throws java.sql.SQLException
 	 */
         protected List<ProgramSlot> listProgramSlotQuery(PreparedStatement stmt) throws SQLException {
@@ -404,9 +403,9 @@ public class ProgramScheduleDaoImpl implements ProgramScheduleDao{
 	 * value indicates how many rows were affected. This method will also make
 	 * sure that if cache is used, it will reset when data changes.
 	 * 
-	 * @param stmt
-	 *            This parameter contains the SQL statement to be excuted.
-     * @return 
+	 * @param stmt the SQL statement to be excuted.
+	 *             
+     * @return int value signifying successful or failed update (1=succesful,0=fail)
      * @throws java.sql.SQLException
 	 */
         protected int databaseUpdate(PreparedStatement stmt) throws SQLException {
