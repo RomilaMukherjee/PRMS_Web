@@ -16,7 +16,7 @@ import sg.edu.nus.iss.phoenix.core.dao.DAOFactoryImpl;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 
 /**
- *
+ * Class that provides user related services 
  * @author shashwatjain
  */
 public class UserService {
@@ -26,11 +26,18 @@ public class UserService {
 	DAOFactoryImpl factory;
 	UserDao udao;
 
+    /**
+     * Constructor
+     */    
     public UserService() {
         this.factory = new DAOFactoryImpl();
         this.udao = factory.getUserDAO();
     }
-       
+    
+    /**
+     * Gets all roles as a list 
+     * @return list of roles
+     */
     public List<Role> getRoles(){
         try{
             return udao.getRoles();
@@ -39,6 +46,11 @@ public class UserService {
             return null;
         }
     }
+    
+    /**
+     * Returns a list of users in ascending order
+     * @return List of user objects
+     */
     public List<User> findAllUsers(){
         try {
             return udao.loadAll();
@@ -48,6 +60,11 @@ public class UserService {
         }
     } 
     
+    /**
+     * Finds all users by a role and returns a list of such users
+     * @param role user's role that you want to search by
+     * @return List of user objects
+     */
     public List<User> findAllUsersByRole(String role){
         try {
             return udao.loadAllUsersByRole(role);
@@ -57,6 +74,10 @@ public class UserService {
         }
     } 
 
+    /**
+     * Delete user by name
+     * @param name name of user that you want to delete
+     */
     public void processDelete(String name) {
        
         try {
@@ -68,6 +89,10 @@ public class UserService {
         
     }
     
+    /**
+     * Creates a user
+     * @param user user object containing all user details
+     */
     public void processCreate(User user){
         try {
             udao.create(user);
@@ -75,7 +100,11 @@ public class UserService {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    /**
+     * Updates a user's details
+     * @param user user object containing updated details
+     */
     public void processUpdate(User user) {
         try {
             udao.save(user);
