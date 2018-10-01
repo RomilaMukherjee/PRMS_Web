@@ -9,10 +9,13 @@ import java.util.List;
 import sg.edu.nus.iss.phoenix.programschedule.entity.WeeklySchedule;
 
 /**
- *
+ * Class representing a list of weekly schedules
  * @author Ragu
  */
 public class WeeklySchedules {
+    /**
+     * List of weekly schedules
+     */
     private List<WeeklySchedule> weeklySchedules;
 
     public List<WeeklySchedule> getWeeklySchedules() {
