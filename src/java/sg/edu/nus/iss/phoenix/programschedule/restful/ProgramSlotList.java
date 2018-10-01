@@ -9,12 +9,16 @@ import java.util.List;
 import sg.edu.nus.iss.phoenix.programschedule.entity.ProgramSlot;
 
 /**
- *
- * @author dharu
+ * Class representing a list of program slots
+ * @author dharini
  */
 public class ProgramSlotList {
-        private List <ProgramSlot> slotList;
+    /**
+     * List of program slots
+     */    
+    private List <ProgramSlot> slotList;
 
+    
     public List<ProgramSlot> getSlotList() {
         return slotList;
     }
